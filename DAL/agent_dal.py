@@ -48,7 +48,19 @@ class AgentDAL:
         self.cursor.execute(query, (agent_id,))
         row = self.cursor.fetchone()
         self.close()
-        return Agent(**row) if row else None
+
+        if row:
+            agent = Agent(
+                id=row["id"],
+                code_name=row["codeName"],
+                real_name=row["realName"],
+                location=row["location"],
+                status=row["status"],
+                missions_completed=row["missionsCompleted"]
+            )
+            return agent
+        else:
+            return None
 
     def update_agent(self, agent):
         self.connect()
