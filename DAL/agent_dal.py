@@ -33,3 +33,13 @@ class AgentDAL:
         result = self.cursor.fetchone()
         self.close()
         return result
+
+    def add_agent(self, agent):
+       self.connect()
+       query = """
+           INSERT INTO agents (name, rank, specialty)
+           VALUES (%s, %s, %s)
+           """
+       self.cursor.execute(query, (agent.name, agent.rank, agent.specialty))
+       self.connection.commit()
+       self.close()
