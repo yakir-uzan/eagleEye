@@ -7,4 +7,10 @@ class Agent:
         self.status = status
         self.missions_completed = missions_completed
 
-
+    def __str__(self):
+        return (f"Agent ID: {self.id}\n"
+                f"Code Name: {self.code_name}\n"
+                f"Real Name: {self.real_name}\n"
+                f"Location: {self.location}\n"
+                f"Status: {self.status}\n"
+                f"Missions Completed: {self.missions_completed}")
