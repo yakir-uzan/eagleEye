@@ -25,3 +25,11 @@ class AgentDAL:
             self.cursor.close()
         if self.connection:
             self.connection.close()
+
+    def get_agent_by_id(self, agent_id):
+        self.connect()
+        query = "SELECT * FROM agents WHERE id = %s"
+        self.cursor.execute(query, (agent_id,))
+        result = self.cursor.fetchone()
+        self.close()
+        return result
