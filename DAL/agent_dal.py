@@ -54,3 +54,10 @@ class AgentDAL:
         self.cursor.execute(query, (agent.name, agent.rank, agent.specialty, agent.id))
         self.connection.commit()
         self.close()
+
+    def delete_agent(self, agent_id):
+        self.connect()
+        query = "DELETE FROM agents WHERE id = %s"
+        self.cursor.execute(query, (agent_id,))
+        self.connection.commit()
+        self.close()
