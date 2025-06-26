@@ -19,3 +19,9 @@ class AgentDAL:
             database = self.database
         )
         self.cursor = self.connection.cursor(dictionary = True)
+
+    def close(self):
+        if self.cursor:
+            self.cursor.close()
+        if self.connection:
+            self.connection.close()
