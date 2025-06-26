@@ -37,10 +37,24 @@ class AgentDAL:
 
     def get_all_agents(self):
         self.connect()
-        self.cursor.execute("SELECT * FROM agents")
+        query = "SELECT * FROM agents"
+        self.cursor.execute(query)
         rows = self.cursor.fetchall()
         self.close()
-        return [Agent(**row) for row in rows]
+
+        agents = []
+        for row in rows:
+            agent = Agent(
+                id=row["id"],
+                code_name=row["codeName"],
+                real_name=row["realName"],
+                location=row["location"],
+                status=row["status"],
+                missions_completed=row["missionsCompleted"]
+            )
+            agents.append(agent)
+
+        return agents
 
     def get_agent_by_id(self, agent_id):
         self.connect()
@@ -65,11 +79,18 @@ class AgentDAL:
     def update_agent(self, agent):
         self.connect()
         query = """
-            UPDATE agents
-            SET codeName = %s, realName = %s, location = %s, status = %s, missionsCompleted = %s
-            WHERE id = %s
+        UPDATE agents
+        SET codeName = %s, realName = %s, location = %s, status = %s, missionsCompleted = %s
+        WHERE id = %s
         """
-        self.cursor.execute(query, (agent.code_name, agent.real_name, agent.location, agent.status, agent.missions_completed, agent.id))
+        self.cursor.execute(query, (
+            agent.code_name,
+            agent.real_name,
+            agent.location,
+            agent.status,
+            agent.missions_completed,
+            agent.id
+        ))
         self.conn.commit()
         self.close()
 
