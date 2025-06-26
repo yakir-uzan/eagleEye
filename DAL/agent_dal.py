@@ -10,3 +10,12 @@ class AgentDAL:
             database = database
         )
         self.cursor = self.conn.cursor()
+
+    def connect(self):
+        self.connection = mysql.connector.connect(
+            host = self.host,
+            user = self.user,
+            password = self.password,
+            database = self.database
+        )
+        self.cursor = self.connection.cursor(dictionary = True)
