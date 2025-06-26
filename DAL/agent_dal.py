@@ -43,3 +43,14 @@ class AgentDAL:
        self.cursor.execute(query, (agent.name, agent.rank, agent.specialty))
        self.connection.commit()
        self.close()
+
+    def update_agent(self, agent):
+        self.connect()
+        query = """
+        UPDATE agents
+        SET name = %s, rank = %s, specialty = %s
+        WHERE id = %s
+        """
+        self.cursor.execute(query, (agent.name, agent.rank, agent.specialty, agent.id))
+        self.connection.commit()
+        self.close()
